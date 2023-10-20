@@ -16,6 +16,7 @@ var wobble_direction = Vector2.ZERO
 var decay_wobble = 0.15
 
 var distort_effect = 0.0002
+var h_rotate = 0.0
 
 var released = true
 
@@ -55,6 +56,7 @@ func _input(event):
 func _integrate_forces(state):
 	wobble()
 	distort()
+	comet()
 	if not released:
 		var paddle = get_node_or_null("/root/Game/Paddle_Container/Paddle")
 		if paddle != null:
@@ -82,6 +84,9 @@ func change_speed(s):
 	speed_multiplier = s
 
 func die():
+	var die_sound = get_node_or_null("/root/Game/Die_Sound")
+	if die_sound != null:
+		die_sound.play()
 	queue_free()
 	
 func wobble():
@@ -96,4 +101,13 @@ func distort():
 	$Images.rotation = linear_velocity.angle()
 	$Images.scale = direction
 	
+func comet():
+	h_rotate = wrapf(h_rotate+0.01, 0, 1)
+	var Comet_Container = get_node_or_null("/root/Game/Comet_Container")
+	if Comet_Container != null:
+		var sprite = $Images/Sprite2D.duplicate()
+		sprite.global_position = global_position
+		sprite.modulate.s = 0.6
+		sprite.modulate.h = h_rotate
+		Comet_Container.add_child(sprite)
 
