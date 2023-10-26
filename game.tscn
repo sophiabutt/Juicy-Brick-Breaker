@@ -1,8 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://bd5m3yq1k5fx8"]
+[gd_scene load_steps=22 format=3 uid="uid://bd5m3yq1k5fx8"]
 
 [ext_resource type="Script" path="res://Brick/Brick_Container.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://dtbom8hko18h3" path="res://Paddle/Paddle.tscn" id="2"]
 [ext_resource type="Script" path="res://Ball/Comet_Container.gd" id="2_3hvig"]
+[ext_resource type="Script" path="res://UI/Background.gd" id="2_5jrf2"]
+[ext_resource type="Shader" path="res://Effects/Background.gdshader" id="2_ks7t8"]
 [ext_resource type="Script" path="res://Ball/Ball_Container.gd" id="3"]
 [ext_resource type="Script" path="res://Game.gd" id="4"]
 [ext_resource type="PackedScene" uid="uid://ci5q3vmuimsfr" path="res://UI/Pause_Menu.tscn" id="5"]
@@ -17,6 +19,13 @@
 [ext_resource type="AudioStream" uid="uid://f76yc2k418xa" path="res://Assets/paddle.wav" id="14_b2op1"]
 [ext_resource type="AudioStream" uid="uid://c8q3unbqtfnn7" path="res://Assets/die.wav" id="15_1g0e0"]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qesns"]
+shader = ExtResource("2_ks7t8")
+shader_parameter/TWOPI = 6.28319
+shader_parameter/NUM_EXPLOSIONS = 8.0
+shader_parameter/NUM_PARTICLES = 70.0
+shader_parameter/MOD3 = Vector3(0.1031, 0.11369, 0.13787)
+
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(200, 1000)
 
@@ -25,6 +34,14 @@ size = Vector2(1224, 200)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("4")
+
+[node name="Background" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_qesns")
+use_parent_material = true
+offset_right = 1150.0
+offset_bottom = 801.0
+color = Color(0.33, 0.33, 0.33, 1)
+script = ExtResource("2_5jrf2")
 
 [node name="Comet_Container" type="Node2D" parent="."]
 script = ExtResource("2_3hvig")
